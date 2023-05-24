@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ingreso de Nota</title>
+</head>
+
+<body>
+  <h1>Ingreso de Nota</h1>
+
+  <form id="notaForm">
+    <label for="nota">Nota:</label>
+    <input type="number" name="nota" min="0" max="10" required>
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <script>
+    const form = document.querySelector('#notaForm');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const notaInput = document.querySelector('input[name="nota"]');
+      const nota = parseFloat(notaInput.value);
+
+      const res = await fetch('/notas/ingreso', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nota })
+      });
+      if (res.ok) {
+        alert('Nota ingresada correctamente');
+        notaInput.value = '';
+      }
+    });
+  </script>
+</body>
+
+</html>
